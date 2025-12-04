@@ -6,7 +6,7 @@ export const ensureAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!auth) return res.status(401).json({ message: "Unauthorized" });
   const token = auth.split(" ")[1];
   try {
-    const payload = verifyAccessToken(token);
+    const payload = verifyAccessToken(token!); // ! utilizado...possivel problema
     (req as any).user = payload;
     next();
   } catch {
