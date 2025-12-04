@@ -2,16 +2,31 @@ import fs from "fs";
 import path from "path";
 import { Request, Response } from "express";
 
-export const streamVideo = (req: Request, res: Response) => {
+export const streamVideo = (
+  req: Request<{ fileName: string }>,
+  res: Response
+) => {
   const filePath = path.join(__dirname, "../../videos", req.params.fileName!); //app.get("/video/:fileName", streamVideo);
   //ao adicionar a rota que pega o video, tirar o ! do filename
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ message: "Video not found" });
+  }
+
   const stat = fs.statSync(filePath);
   const fileSize = stat.size;
   const range = req.headers.range;
+
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeTypes: Record<string, string> = {
+    ".mp4": "video/mp4",
+    ".mkv": "video/x-matroska",
+  };
+  const contentType = mimeTypes[ext] || "application/octet-stream";
+
   if (!range) {
     res.writeHead(200, {
       "Content-Length": fileSize,
-      "Content-Type": "video/mp4",
+      "Content-Type": contentType,
     });
     fs.createReadStream(filePath).pipe(res);
   } else {
@@ -24,7 +39,7 @@ export const streamVideo = (req: Request, res: Response) => {
       "Content-Range": `bytes ${start}-${end}/${fileSize}`,
       "Accept-Ranges": "bytes",
       "Content-Length": chunkSize,
-      "Content-Type": "video/mp4",
+      "Content-Type": contentType,
     });
     stream.pipe(res);
   }
