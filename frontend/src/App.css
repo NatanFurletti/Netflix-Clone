@@ -1,0 +1,121 @@
+/* src/App.css */
+
+/* Estilos específicos da aplicação Netflix Clone */
+
+.app-container {
+  @apply min-h-screen bg-netflix-black;
+}
+
+/* Header/Navbar */
+.netflix-header {
+  @apply fixed top-0 left-0 right-0 z-50 navbar-gradient 
+         px-4 md:px-8 py-4 flex items-center justify-between;
+}
+
+.netflix-logo {
+  @apply h-8 md:h-10 w-auto text-netflix-red font-bold text-2xl;
+}
+
+/* Hero/Banner Section */
+.hero-section {
+  @apply relative h-screen flex items-center justify-center 
+         overflow-hidden;
+}
+
+.hero-background {
+  @apply absolute inset-0 bg-cover bg-center;
+}
+
+.hero-gradient {
+  @apply absolute inset-0 netflix-gradient;
+}
+
+.hero-content {
+  @apply relative z-10 text-center px-4 max-w-4xl mx-auto;
+}
+
+.hero-title {
+  @apply text-4xl md:text-6xl lg:text-7xl font-bold mb-6;
+}
+
+.hero-description {
+  @apply text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto;
+}
+
+.hero-buttons {
+  @apply flex flex-col sm:flex-row gap-4 justify-center;
+}
+
+/* Movie Row */
+.movie-row {
+  @apply mb-8 px-4 md:px-8;
+}
+
+.row-title {
+  @apply text-2xl md:text-3xl font-bold mb-4 ml-2;
+}
+
+.movies-container {
+  @apply flex overflow-x-auto gap-4 pb-4;
+}
+
+/* Movie Card */
+.movie-card-container {
+  @apply movie-card min-w-[200px] md:min-w-[250px];
+}
+
+.movie-poster {
+  @apply w-full h-[300px] md:h-[350px] object-cover rounded;
+}
+
+.movie-info {
+  @apply absolute bottom-0 left-0 right-0 p-4 netflix-gradient 
+         opacity-0 hover:opacity-100 transition-opacity duration-300;
+}
+
+.movie-title {
+  @apply text-white font-bold text-lg mb-2;
+}
+
+/* Footer */
+.netflix-footer {
+  @apply bg-black py-8 px-4 md:px-8 border-t border-gray-800;
+}
+
+.footer-links {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-4 mb-6;
+}
+
+.footer-link {
+  @apply text-gray-400 hover:text-white transition;
+}
+
+.footer-copyright {
+  @apply text-gray-500 text-sm;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-title {
+    @apply text-3xl;
+  }
+
+  .hero-buttons {
+    @apply flex-col;
+  }
+
+  .movie-card-container {
+    @apply min-w-[150px];
+  }
+}
+
+/* Efeito de hover nos cards */
+.movie-card-container:hover .movie-poster {
+  @apply brightness-110;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  @apply w-12 h-12 border-4 border-netflix-red border-t-transparent 
+         rounded-full animate-spin mx-auto;
+}

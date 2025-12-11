@@ -1,0 +1,65 @@
+/* src/index.css - Versão alternativa */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #141414;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ⭐ ALTERNATIVA: Use CSS puro em vez de @apply ⭐ */
+body {
+  background-color: #141414; /* bg-netflix-black */
+  color: white;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* OU use variáveis CSS se preferir */
+:root {
+  --netflix-red: #e50914;
+  --netflix-black: #141414;
+  --netflix-gray: #808080;
+  --netflix-light-gray: #e5e5e5;
+}
+
+/* Classes utilitárias manuais */
+.btn-netflix {
+  background-color: var(--netflix-red);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: background-color 300ms;
+}
+
+.btn-netflix:hover {
+  background-color: #b91c1c; /* red-700 */
+}
+
+.navbar-gradient {
+  background: linear-gradient(to bottom, black, transparent);
+}
+
+.netflix-gradient {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    black 100%
+  );
+}
