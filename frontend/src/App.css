@@ -4,21 +4,48 @@
 
 .app-container {
   @apply min-h-screen bg-netflix-black;
+  padding-top: 72px; /* leave room for fixed header */
 }
 
 /* Header/Navbar */
 .netflix-header {
   @apply fixed top-0 left-0 right-0 z-50 navbar-gradient 
          px-4 md:px-8 py-4 flex items-center justify-between;
+  backdrop-filter: blur(6px);
+  min-height: 64px;
 }
 
 .netflix-logo {
-  @apply h-8 md:h-10 w-auto text-netflix-red font-bold text-2xl;
+  @apply h-10 md:h-12 w-auto text-netflix-red font-extrabold text-6xl md:text-9xl;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 12px;
+}
+
+.left-controls, .right-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.left-controls .btn-netflix {
+  padding: 0.5rem 0.9rem;
+}
+
+.left-controls {
+  left: 1rem;
+}
+
+.right-controls {
+  right: 1rem;
 }
 
 /* Hero/Banner Section */
 .hero-section {
-  @apply relative h-screen flex items-center justify-center 
+  @apply relative h-[65vh] flex items-center justify-center 
          overflow-hidden;
 }
 
@@ -32,10 +59,13 @@
 
 .hero-content {
   @apply relative z-10 text-center px-4 max-w-4xl mx-auto;
+  top: -2.5rem;
 }
 
 .hero-title {
   @apply text-4xl md:text-6xl lg:text-7xl font-bold mb-6;
+  color: white;
+  text-shadow: 0 6px 12px rgba(0,0,0,0.6);
 }
 
 .hero-description {
@@ -49,6 +79,7 @@
 /* Movie Row */
 .movie-row {
   @apply mb-8 px-4 md:px-8;
+  position: relative;
 }
 
 .row-title {
@@ -56,25 +87,84 @@
 }
 
 .movies-container {
-  @apply flex overflow-x-auto gap-4 pb-4;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+  align-items: flex-start;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.movies-container::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track > * {
+  scroll-snap-align: start;
 }
 
 /* Movie Card */
 .movie-card-container {
-  @apply movie-card min-w-[200px] md:min-w-[250px];
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-width: 110px; /* smaller preview */
+  max-width: 160px; /* reduced max width */
+  overflow: visible;
+  margin-right: 0.25rem;
 }
 
 .movie-poster {
-  @apply w-full h-[300px] md:h-[350px] object-cover rounded;
+  @apply w-full h-[120px] md:h-[160px] object-cover rounded-lg;
 }
 
 .movie-info {
-  @apply absolute bottom-0 left-0 right-0 p-4 netflix-gradient 
-         opacity-0 hover:opacity-100 transition-opacity duration-300;
+  @apply absolute bottom-0 left-0 right-0 p-2 netflix-gradient 
+         opacity-0 transition-opacity duration-200;
+}
+
+.group:hover .movie-info {
+  opacity: 1;
+}
+
+.carousel-arrow {
+  position: absolute;
+  z-index: 40;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  cursor: pointer;
+  font-size: 1.125rem;
+}
+
+.carousel-arrow.left {
+  left: 8px;
+  pointer-events: auto;
+}
+
+.carousel-arrow.right {
+  right: 8px;
+  pointer-events: auto;
+}
+
+.carousel-arrow svg {
+  color: white;
 }
 
 .movie-title {
-  @apply text-white font-bold text-lg mb-2;
+  @apply text-white font-bold text-sm mb-1;
 }
 
 /* Footer */
@@ -107,11 +197,52 @@
   .movie-card-container {
     @apply min-w-[150px];
   }
+  .play-button {
+    opacity: 1;
+  }
+  .movie-info {
+    opacity: 0.95;
+    position: relative;
+    background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.6));
+    padding-top: 0.5rem;
+  }
 }
 
 /* Efeito de hover nos cards */
 .movie-card-container:hover .movie-poster {
   @apply brightness-110;
+}
+
+.movie-card-container {
+  transition: transform 300ms ease, box-shadow 200ms ease;
+}
+
+.movie-card-container:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.55);
+}
+
+.play-button {
+  @apply bg-netflix-red text-white rounded-full w-3 h-3 flex items-center justify-center text-xs shadow-lg;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.play-button:hover {
+  transform: scale(1.08);
+}
+
+/* make SVG icon inside smaller */
+.play-button svg {
+  width: 8px;
+  height: 8px;
+}
+
+.group .play-button {
+  opacity: 0;
+}
+
+.group:hover .play-button {
+  opacity: 1;
 }
 
 /* Loading spinner */
